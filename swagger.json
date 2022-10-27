@@ -1,0 +1,13 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "IDA Documentation",
+        "contact": {
+            "email": "bilgeerturk95@hotmail.com"
+        }
+    },
+    "tags": [],
+    "paths": {},
+    "schemas": {}
+}
