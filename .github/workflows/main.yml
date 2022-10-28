@@ -1,9 +1,9 @@
-name: Develop Pipeline
+name: Main Pipeline
 on:
   push:
-    branches: [ develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ develop ]
+    branches: [ main ]
 jobs:
   install:
     env:
@@ -11,7 +11,7 @@ jobs:
       MONGO_URL: mongodb://localhost/ida
     strategy:
       matrix:
-      mongodb-version: ['4.4']
+        mongodb-version: ['4.4']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
