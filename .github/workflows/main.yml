@@ -29,4 +29,5 @@ jobs:
           context: .
           push: true
           tags: barisarabasuren/ida:tagname
+
         
