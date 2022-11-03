@@ -1,7 +1,7 @@
-name: Main Pipeline
+name: Production Pipeline
 on:
   push:
-    branches: [ main ]
+    branches: [ production ]
 jobs:
   deploy:
     env:
@@ -28,6 +28,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: barisarabasuren/ida:tagname
+          tags: barisarabasuren/ida:latest
 
         
