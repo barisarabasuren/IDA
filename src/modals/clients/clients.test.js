@@ -25,7 +25,7 @@ describe('Test client', () => {
         test('It should respont with 201', async() => {
             const response = await request(app)
                 .post('/client/questionary')
-                .set('Authorization', 'bearer ' + accessToken)
+                .set('authorization', 'bearer ' + accessToken)
                 .send({
                     place: "Berlin",
                     jobCategory: {
@@ -51,17 +51,17 @@ describe('Test client', () => {
     })
 
     describe('Test GET /client/questionary', () => {
-        test('It should respont with 400', async() => {
+        test('It should respont with 403', async() => {
             const response = await request(app)
                 .get('/client/questionary')
-                .set('Authorization', 'bearer ' + "Wrong Token")
+                .set('authorization', 'bearer ' + "Wrong Token")
                 .expect(403)
         })
 
         test('It should respont with 200', async() => {
             const response = await request(app)
                 .get('/client/questionary')
-                .set('Authorization', 'bearer ' + accessToken)
+                .set('authorization', 'bearer ' + accessToken)
                 .expect(200)
         })
     })
