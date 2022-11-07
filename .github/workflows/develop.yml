@@ -8,7 +8,6 @@ jobs:
   install:
     env:
       CI: true
-      MONGO_URL: mongodb://localhost/ida
       ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
       REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
     strategy:
@@ -27,12 +26,12 @@ jobs:
         with:
           node-version: '${{ steps.nvmrc.outputs.node_version }}'
 
-      - name: Use MongoDB from Github actions
-        uses: supercharge/mongodb-github-action@1.6.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
       - name: Npm install
         run: npm install
       
       - name: Run tests
+        env:
+          MONGO_URL: ${{ secrets.MONGO_URL_TEST }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
         run: npm run test
