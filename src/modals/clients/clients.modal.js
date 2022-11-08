@@ -8,6 +8,8 @@ const { addRefreshToken, doesRefreshTokenExist } = require('../clientRefreshToke
 require('dotenv')?.config();
 
 const Client = require('./clients.mongo');
+const { generateAccessToken } = require('../../common/generateAccessToken');
+const { generateRefreshToken } = require('../../common/generateRefreshToken');
 
 const config = {
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
@@ -92,16 +94,11 @@ const getToken = async(body) => {
         }
 
         const accessToken = generateAccessToken(jwtClient)
-
-        const refreshToken = jwt.sign(
-            jwtClient,
-            config.REFRESH_TOKEN_SECRET
-        )
+        const refreshToken = generateRefreshToken(jwtClient)
 
         addRefreshToken(refreshToken)
 
         return ([200, {accessToken: accessToken, refreshToken: refreshToken}])
-
     } catch(err) {
         return ([500, 'Something went wrong'])
     }
@@ -164,15 +161,6 @@ const authenticateClientToken = (req, res, next) => {
 const doesClientExistByEmail = async(email) => {
     const response = await Client.exists({email: email})
     return Boolean(response)
-}
-
-const generateAccessToken = (jwtClient) => {
-    return jwt.sign(
-        jwtClient, 
-        config.ACCESS_TOKEN_SECRET, {
-            expiresIn: '15m'
-        }
-    )
 }
 
 module.exports = {
