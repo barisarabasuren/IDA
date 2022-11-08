@@ -1,4 +1,4 @@
-const { signUp, getToken, getAccessToken, getClient } = require('../../modals/clients/clients.modal');
+const { signUp, getToken, getAccessToken, getClient } = require('../../../modals/clients/clients.modal');
 
 const httpSignUp = async (req,res) => {
     const response = await signUp(req.body)
