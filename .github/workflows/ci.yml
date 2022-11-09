@@ -1,0 +1,30 @@
+name: Continuous Integration Pipeline
+on:
+  pull_request:
+    branches: [ develop, production ]
+jobs:
+  install:
+    env:
+      CI: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - id: nvmrc
+        uses: browniebroke/read-nvmrc-action@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvmrc.outputs.node_version }}'
+
+      - name: Npm install
+        run: npm install
+      
+      - name: Run tests
+        env:
+          MONGO_URL: ${{ secrets.MONGO_URL_TEST }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+        run: npm run test
