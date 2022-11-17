@@ -2,36 +2,34 @@ name: Develop Pipeline
 on:
   push:
     branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
 jobs:
   install:
     env:
       CI: true
-      ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
-      REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
-    strategy:
-      matrix:
-        mongodb-version: ['4.4']
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - id: nvmrc
-        uses: browniebroke/read-nvmrc-action@v1
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          node-version: '${{ steps.nvmrc.outputs.node_version }}'
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Npm install
-        run: npm install
-      
-      - name: Run tests
-        env:
-          MONGO_URL: ${{ secrets.MONGO_URL_TEST }}
-          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
-          REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
-        run: npm run test
+      - name: Build and push
+        uses: docker/build-push-action@v3 
+        with:
+          context: .
+          push: true
+          tags: barisarabasuren/ida:dev-latest
+          build-args: |
+            MONGO_URL=${{ secrets.MONGO_URL }}
+            ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}
+            REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }}
