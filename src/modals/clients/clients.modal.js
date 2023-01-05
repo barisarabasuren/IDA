@@ -11,6 +11,7 @@ const Client = require('./clients.mongo');
 const { generateAccessToken } = require('../../common/generateAccessToken');
 const { generateRefreshToken } = require('../../common/generateRefreshToken');
 const { addFailedAttempt } = require('../clientRateLimits/clientRateLimits.modal');
+const { passwordStrength } = require('check-password-strength');
 
 const config = {
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
@@ -35,6 +36,12 @@ const signUp = async(body) => {
 
     if(doesClientExist) {
         return ([400, 'This email is already registered'])
+    }
+
+    const passwordCheck = passwordStrength(body.password)
+    
+    if(passwordCheck.value !== "Strong") {
+        return([400, passwordCheck])
     }
 
     const hashedPassword = (

@@ -7,6 +7,7 @@ const { generateAccessToken } = require('../../common/generateAccessToken');
 const { generateRefreshToken } = require('../../common/generateRefreshToken');
 const { addRefreshToken, doesRefreshTokenExist } = require('../designerRefreshTokens/designerRefreshTokens.modal');
 const { addFailedAttempt } = require('../designerRateLimits/designerRateLimits.modal');
+const { passwordStrength } = require('check-password-strength');
 
 require('dotenv')?.config();
 
@@ -20,6 +21,12 @@ const signUp = async(body) => {
 
     if(doesDesignerExist) {
         return ([400, 'This email is already registered'])
+    }
+
+    const passwordCheck = passwordStrength(body.password)
+    
+    if(passwordCheck.value !== "Strong") {
+        return([400, passwordCheck])
     }
 
     const hashedPassword = (
