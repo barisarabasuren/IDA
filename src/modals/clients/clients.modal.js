@@ -10,6 +10,7 @@ require('dotenv')?.config();
 const Client = require('./clients.mongo');
 const { generateAccessToken } = require('../../common/generateAccessToken');
 const { generateRefreshToken } = require('../../common/generateRefreshToken');
+const { addFailedAttempt } = require('../clientRateLimits/clientRateLimits.modal');
 
 const config = {
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
@@ -61,7 +62,7 @@ const signUp = async(body) => {
     }
 }
 
-const getToken = async(body) => {
+const getToken = async(body, ip) => {
     const requiredFields = [
         'email',
         'password'
@@ -85,6 +86,7 @@ const getToken = async(body) => {
     const doesPasswordMatch = await bcrypt.compare(body.password, client.password)
 
     if(!doesPasswordMatch) {
+        await addFailedAttempt(ip)
         return ([400, 'Wrong password'])
     }
 

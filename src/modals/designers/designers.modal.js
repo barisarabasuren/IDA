@@ -6,6 +6,7 @@ const Designer = require('./designers.mongo');
 const { generateAccessToken } = require('../../common/generateAccessToken');
 const { generateRefreshToken } = require('../../common/generateRefreshToken');
 const { addRefreshToken, doesRefreshTokenExist } = require('../designerRefreshTokens/designerRefreshTokens.modal');
+const { addFailedAttempt } = require('../designerRateLimits/designerRateLimits.modal');
 
 require('dotenv')?.config();
 
@@ -48,7 +49,7 @@ const signUp = async(body) => {
     }
 }
 
-const getToken = async(body) => {
+const getToken = async(body, ip) => {
     const designer = await Designer.findOne(
         {email: body.email},
         {designer_id: 1, password: 1, _id: 0}
@@ -61,6 +62,7 @@ const getToken = async(body) => {
     const doesPasswordMatch = await bcrypt.compare(body.password, designer.password)
 
     if(!doesPasswordMatch) {
+        await addFailedAttempt(ip)
         return ([400, 'Wrong password'])
     }
 
