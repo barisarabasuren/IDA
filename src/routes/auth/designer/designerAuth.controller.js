@@ -6,7 +6,7 @@ const httpSignUp = async (req,res) => {
 }
 
 const httpGetToken = async (req,res) => {
-    const response = await getToken(req.body)
+    const response = await getToken(req.body, req.ip)
     return res.status(response[0]).json(response[1])
 }
 
