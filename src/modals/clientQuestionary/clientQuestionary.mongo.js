@@ -1,22 +1,9 @@
 const mongoose = require('mongoose');
-const { jobCategoryTypes, contactTypes, budgetTypes, startTypes } = require('./clientQuestionary.types');
+const { createSchemaFromTypes } = require('../../common/createSchemaFromTypes');
+const { jobCategoryTypes, contactTypes, budgetTypes, startTypes, areaTypes, impressionTypes } = require('./clientQuestionary.types');
 
-const createBoolSchema = (types) => {
-    let schema = {}
-    
-    for(let i = 0; i < types.length; i++) {
-        schema[types[i]] = {
-            type: Boolean,
-            required: true
-        }
-    }
-
-    return schema
-}
-
-const jobCategorySchema = new mongoose.Schema(createBoolSchema(jobCategoryTypes))
-
-const contactSchema = new mongoose.Schema(createBoolSchema(contactTypes))
+const jobCategorySchema = new mongoose.Schema(createSchemaFromTypes(jobCategoryTypes))
+const contactSchema = new mongoose.Schema(createSchemaFromTypes(contactTypes))
 
 const clientQuestionarySchema = new mongoose.Schema({
     client_id: {
@@ -36,12 +23,14 @@ const clientQuestionarySchema = new mongoose.Schema({
         required: true
     },
     area: {
-        type: Number,
+        type: String,
         required: true,
+        enum: areaTypes
     },
     impression: {
         type: String,
-        required: true
+        required: true,
+        enum: impressionTypes
     },
     budget: {
         type: String,

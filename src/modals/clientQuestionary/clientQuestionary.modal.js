@@ -1,4 +1,3 @@
-const { findMissingCredentials } = require("../../common/findMissingCredentials")
 const ClientQuestionary = require("./clientQuestionary.mongo")
 
 const { v1: uuidv1 } = require('uuid');

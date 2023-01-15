@@ -11,7 +11,7 @@ describe('Test client', () => {
             .post('/auth/client/token')
             .send({
                 email: "test@gmail.com",
-                password: "password"
+                password: "Password!123456"
             })
                     
         accessToken = response.body.accessToken;
@@ -36,7 +36,7 @@ describe('Test client', () => {
                         terrace: false,
                         other: true
                     },
-                    area: 30,
+                    area: "0-20",
                     impression: "B",
                     budget: "10000-15000",
                     start: "ASAP",
