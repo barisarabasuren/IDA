@@ -30,6 +30,14 @@ const startTypes = [
     "NOIDEA"
 ]
 
+const workDistrictTypes = [
+    "0-20",
+    "20-50",
+    "50-100",
+    "150-250",
+    "250+"
+]
+
 const areaTypes = [
     "0-20",
     "20-50",
@@ -52,5 +60,6 @@ module.exports = {
     budgetTypes,
     startTypes,
     areaTypes,
+    workDistrictTypes,
     impressionTypes
 }

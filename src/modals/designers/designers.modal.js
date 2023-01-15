@@ -133,5 +133,6 @@ const doesDesignerExistByEmail = async(email) => {
 module.exports = {
     signUp,
     getToken,
-    getAccessToken
+    getAccessToken,
+    authenticateDesignerToken
 }
