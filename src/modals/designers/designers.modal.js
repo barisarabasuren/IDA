@@ -8,6 +8,8 @@ const { generateRefreshToken } = require('../../common/generateRefreshToken');
 const { addRefreshToken, doesRefreshTokenExist } = require('../designerRefreshTokens/designerRefreshTokens.modal');
 const { addFailedAttempt } = require('../designerRateLimits/designerRateLimits.modal');
 const { passwordStrength } = require('check-password-strength');
+const { getClientQuestionary } = require('../clientQuestionary/clientQuestionary.modal');
+const { getMatchingQuestionaries } = require('../designerQuestionary/designerQuestionary.modal');
 
 require('dotenv')?.config();
 
@@ -130,9 +132,17 @@ const doesDesignerExistByEmail = async(email) => {
     return Boolean(response)
 }
 
+const getMatchingDesigners = async(jwtClient) => {
+    const clientQuestionary = (await getClientQuestionary(jwtClient))[1][0]
+    const matchingQuestionaries = await getMatchingQuestionaries(clientQuestionary)
+    const matchingDesignerIds = matchingQuestionaries.map(index => index.designer_id)
+    return ([200, matchingDesignerIds])
+}
+
 module.exports = {
     signUp,
     getToken,
     getAccessToken,
-    authenticateDesignerToken
+    authenticateDesignerToken,
+    getMatchingDesigners
 }

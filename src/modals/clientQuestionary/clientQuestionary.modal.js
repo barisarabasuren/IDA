@@ -3,6 +3,12 @@ const ClientQuestionary = require("./clientQuestionary.mongo")
 const { v1: uuidv1 } = require('uuid');
 
 const addClientQuestionary = async(body, jwtClient) => {
+    const doesClientQuestionaryExist = Boolean((await getClientQuestionary(jwtClient))[1].length)
+
+    if(doesClientQuestionaryExist) {
+        return ([400, "Client questionary exists"])
+    }
+
     const questionary_id = uuidv1();
 
     const newClientQuestionary = new ClientQuestionary({
