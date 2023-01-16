@@ -1,4 +1,4 @@
-const { signUp, getToken, getAccessToken, getClient } = require('../../modals/clients/clients.modal');
+const { signUp, getToken, getAccessToken, getClient } = require('../../../modals/clients/clients.modal');
 
 const httpSignUp = async (req,res) => {
     const response = await signUp(req.body)
@@ -6,7 +6,7 @@ const httpSignUp = async (req,res) => {
 }
 
 const httpGetToken = async (req,res) => {
-    const response = await getToken(req.body)
+    const response = await getToken(req.body, req.ip)
     return res.status(response[0]).json(response[1])
 }
 

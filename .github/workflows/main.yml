@@ -26,7 +26,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: barisarabasuren/ida:latest
+          tags: barisarabasuren/ida:prod-latest
           build-args: |
             MONGO_URL=${{ secrets.MONGO_URL }}
             ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}

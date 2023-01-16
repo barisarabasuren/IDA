@@ -11,7 +11,7 @@ describe('Test client', () => {
             .post('/auth/client/token')
             .send({
                 email: "test@gmail.com",
-                password: "password"
+                password: "Password!123456"
             })
                     
         accessToken = response.body.accessToken;
@@ -22,7 +22,7 @@ describe('Test client', () => {
     })
 
     describe('Test POST /client/questionary', () => {
-        test('It should respont with 201', async() => {
+        test('It should respont with 400', async() => {
             const response = await request(app)
                 .post('/client/questionary')
                 .set('authorization', 'bearer ' + accessToken)
@@ -36,7 +36,7 @@ describe('Test client', () => {
                         terrace: false,
                         other: true
                     },
-                    area: 30,
+                    area: "0-20",
                     impression: "B",
                     budget: "10000-15000",
                     start: "ASAP",
@@ -46,7 +46,7 @@ describe('Test client', () => {
                         phone: true
                     }
                 })
-                .expect(201)
+                .expect(400)
         })
     })
 

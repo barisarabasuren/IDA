@@ -7,7 +7,1248 @@
             "email": "bilgeerturk95@hotmail.com"
         }
     },
-    "tags": [],
-    "paths": {},
-    "schemas": {}
+    "tags": [
+        {
+            "name": "auth client",
+            "description": "desc"
+        },
+        {
+            "name": "auth designer",
+            "description": "desc"
+        },
+        {
+            "name": "client",
+            "description": "desc"
+        },
+        {
+            "name": "designer",
+            "description": "desc"
+        }
+    ],
+    "paths": {
+        "/auth/client/signup": {
+            "post": {
+                "tags": [
+                    "auth client"
+                ],
+                "summary": "Client signup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "surname": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/auth/client/token": {
+            "post": {
+                "tags": [
+                    "auth client"
+                ],
+                "summary": "Client login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string"
+                                        },
+                                        "refreshToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/client/refresh": {
+            "post": {
+                "tags": [
+                    "auth client"
+                ],
+                "summary": "Get client refresh token",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "refrehToken": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/client": {
+            "get": {
+                "tags": [
+                    "auth client"
+                ],
+                "summary": "Get the profile information",
+                "security": [
+                    {
+                        "clientAuth": [
+                            "admin"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "surname": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/auth/designer/signup": {
+            "post": {
+                "tags": [
+                    "auth designer"
+                ],
+                "summary": "Designer signup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "object",
+                                        "properties": {
+                                            "street": {
+                                                "type": "string"
+                                            },
+                                            "number": {
+                                                "type": "string"
+                                            },
+                                            "postcode": {
+                                                "type": "string"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "country": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "about": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/auth/designer/token": {
+            "post": {
+                "tags": [
+                    "auth designer"
+                ],
+                "summary": "Designer login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string"
+                                        },
+                                        "refreshToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/designer/refresh": {
+            "post": {
+                "tags": [
+                    "auth designer"
+                ],
+                "summary": "Get designer refresh token",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "refrehToken": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/client/questionary": {
+            "post": {
+                "tags": [
+                    "client"
+                ],
+                "summary": "Create new client questionary",
+                "security": [
+                    {
+                        "clientAuth": [
+                            "admin"
+                        ]
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "place": {
+                                        "type": "string"
+                                    },
+                                    "jobCategory": {
+                                        "type": "object",
+                                        "properties": {
+                                            "kitchen": {
+                                                "type": "boolean"
+                                            },
+                                            "livingroom": {
+                                                "type": "boolean"
+                                            },
+                                            "bedroom": {
+                                                "type": "boolean"
+                                            },
+                                            "bathroom": {
+                                                "type": "boolean"
+                                            },
+                                            "terrace": {
+                                                "type": "boolean"
+                                            },
+                                            "other": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "area": {
+                                        "type": "string"
+                                    },
+                                    "impression": {
+                                        "type": "string"
+                                    },
+                                    "budget": {
+                                        "type": "string"
+                                    },
+                                    "contact": {
+                                        "type": "object",
+                                        "properties": {
+                                            "platform": {
+                                                "type": "boolean"
+                                            },
+                                            "email": {
+                                                "type": "boolean"
+                                            },
+                                            "phone": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Created"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "client"
+                ],
+                "summary": "Client questionary",
+                "security": [
+                    {
+                        "clientAuth": [
+                            "admin"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "client_id": {
+                                            "type": "string"
+                                        },
+                                        "questionary_id": {
+                                            "type": "string"
+                                        },
+                                        "place": {
+                                            "type": "string"
+                                        },
+                                        "jobCategory": {
+                                            "type": "object",
+                                            "properties": {
+                                                "kitchen": {
+                                                    "type": "boolean"
+                                                },
+                                                "livingroom": {
+                                                    "type": "boolean"
+                                                },
+                                                "bedroom": {
+                                                    "type": "boolean"
+                                                },
+                                                "bathroom": {
+                                                    "type": "boolean"
+                                                },
+                                                "terrace": {
+                                                    "type": "boolean"
+                                                },
+                                                "other": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "area": {
+                                            "type": "string"
+                                        },
+                                        "impression": {
+                                            "type": "string"
+                                        },
+                                        "budget": {
+                                            "type": "string"
+                                        },
+                                        "contact": {
+                                            "type": "object",
+                                            "properties": {
+                                                "platform": {
+                                                    "type": "boolean"
+                                                },
+                                                "email": {
+                                                    "type": "boolean"
+                                                },
+                                                "phone": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "createdAt": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/designer/questionary": {
+            "post": {
+                "tags": [
+                    "designer"
+                ],
+                "summary": "Create new client questionary",
+                "security": [
+                    {
+                        "designerAuth": [
+                            "admin"
+                        ]
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "workDistrict": {
+                                        "type": "object",
+                                        "properties": {
+                                            "0-20": {
+                                                "type": "boolean"
+                                            },
+                                            "20-50": {
+                                                "type": "boolean"
+                                            },
+                                            "50-100": {
+                                                "type": "boolean"
+                                            },
+                                            "150-250": {
+                                                "type": "boolean"
+                                            },
+                                            "250+": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "jobCategory": {
+                                        "type": "object",
+                                        "properties": {
+                                            "kitchen": {
+                                                "type": "boolean"
+                                            },
+                                            "livingroom": {
+                                                "type": "boolean"
+                                            },
+                                            "bedroom": {
+                                                "type": "boolean"
+                                            },
+                                            "bathroom": {
+                                                "type": "boolean"
+                                            },
+                                            "terrace": {
+                                                "type": "boolean"
+                                            },
+                                            "other": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "area": {
+                                        "type": "object",
+                                        "properties": {
+                                            "0-20": {
+                                                "type": "boolean"
+                                            },
+                                            "20-50": {
+                                                "type": "boolean"
+                                            },
+                                            "50-100": {
+                                                "type": "boolean"
+                                            },
+                                            "100-150": {
+                                                "type": "boolean"
+                                            },
+                                            "150+": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "impression": {
+                                        "type": "object",
+                                        "properties": {
+                                            "A": {
+                                                "type": "boolean"
+                                            },
+                                            "B": {
+                                                "type": "boolean"
+                                            },
+                                            "C": {
+                                                "type": "boolean"
+                                            },
+                                            "D": {
+                                                "type": "boolean"
+                                            },
+                                            "E": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "budget": {
+                                        "type": "object",
+                                        "properties": {
+                                            "0-5000": {
+                                                "type": "boolean"
+                                            },
+                                            "5000-10000": {
+                                                "type": "boolean"
+                                            },
+                                            "10000-15000": {
+                                                "type": "boolean"
+                                            },
+                                            "15000-20000": {
+                                                "type": "boolean"
+                                            },
+                                            "20000-30000": {
+                                                "type": "boolean"
+                                            },
+                                            "30000-40000": {
+                                                "type": "boolean"
+                                            },
+                                            "40000+": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "start": {
+                                        "type": "object",
+                                        "properties": {
+                                            "ASAP": {
+                                                "type": "boolean"
+                                            },
+                                            "3M": {
+                                                "type": "boolean"
+                                            },
+                                            "6M": {
+                                                "type": "boolean"
+                                            },
+                                            "NOIDEA": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "contact": {
+                                        "type": "object",
+                                        "properties": {
+                                            "platform": {
+                                                "type": "boolean"
+                                            },
+                                            "email": {
+                                                "type": "boolean"
+                                            },
+                                            "phone": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Created"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "designer"
+                ],
+                "summary": "Designer questionary",
+                "security": [
+                    {
+                        "designerAuth": [
+                            "admin"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "designer": {
+                                            "type": "string"
+                                        },
+                                        "questionary_id": {
+                                            "type": "string"
+                                        },
+                                        "workDistrict": {
+                                            "type": "object",
+                                            "properties": {
+                                                "0-20": {
+                                                    "type": "boolean"
+                                                },
+                                                "20-50": {
+                                                    "type": "boolean"
+                                                },
+                                                "50-100": {
+                                                    "type": "boolean"
+                                                },
+                                                "150-250": {
+                                                    "type": "boolean"
+                                                },
+                                                "250+": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "jobCategory": {
+                                            "type": "object",
+                                            "properties": {
+                                                "kitchen": {
+                                                    "type": "boolean"
+                                                },
+                                                "livingroom": {
+                                                    "type": "boolean"
+                                                },
+                                                "bedroom": {
+                                                    "type": "boolean"
+                                                },
+                                                "bathroom": {
+                                                    "type": "boolean"
+                                                },
+                                                "terrace": {
+                                                    "type": "boolean"
+                                                },
+                                                "other": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "area": {
+                                            "type": "object",
+                                            "properties": {
+                                                "0-20": {
+                                                    "type": "boolean"
+                                                },
+                                                "20-50": {
+                                                    "type": "boolean"
+                                                },
+                                                "50-100": {
+                                                    "type": "boolean"
+                                                },
+                                                "100-150": {
+                                                    "type": "boolean"
+                                                },
+                                                "150+": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "impression": {
+                                            "type": "object",
+                                            "properties": {
+                                                "A": {
+                                                    "type": "boolean"
+                                                },
+                                                "B": {
+                                                    "type": "boolean"
+                                                },
+                                                "C": {
+                                                    "type": "boolean"
+                                                },
+                                                "D": {
+                                                    "type": "boolean"
+                                                },
+                                                "E": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "budget": {
+                                            "type": "object",
+                                            "properties": {
+                                                "0-5000": {
+                                                    "type": "boolean"
+                                                },
+                                                "5000-10000": {
+                                                    "type": "boolean"
+                                                },
+                                                "10000-15000": {
+                                                    "type": "boolean"
+                                                },
+                                                "15000-20000": {
+                                                    "type": "boolean"
+                                                },
+                                                "20000-30000": {
+                                                    "type": "boolean"
+                                                },
+                                                "30000-40000": {
+                                                    "type": "boolean"
+                                                },
+                                                "40000+": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "start": {
+                                            "type": "object",
+                                            "properties": {
+                                                "ASAP": {
+                                                    "type": "boolean"
+                                                },
+                                                "3M": {
+                                                    "type": "boolean"
+                                                },
+                                                "6M": {
+                                                    "type": "boolean"
+                                                },
+                                                "NOIDEA": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "contact": {
+                                            "type": "object",
+                                            "properties": {
+                                                "platform": {
+                                                    "type": "boolean"
+                                                },
+                                                "email": {
+                                                    "type": "boolean"
+                                                },
+                                                "phone": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        "createdAt": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/designer/designers": {
+            "get": {
+                "tags": [
+                    "designer"
+                ],
+                "summary": "Get search results",
+                "security": [
+                    {
+                        "clientAuth": [
+                            "admin"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "designerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            },
+            "clientAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "clientQuestionary": {
+                "type": "object",
+                "required": [
+                    "client_id",
+                    "questionary_id",
+                    "place",
+                    "jobCategory",
+                    "area",
+                    "impression",
+                    "budget",
+                    "start",
+                    "createdAt"
+                ],
+                "properties": {
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "questionary_id": {
+                        "type": "string"
+                    },
+                    "place": {
+                        "type": "string"
+                    },
+                    "jobCategory": {
+                        "type": "object"
+                    },
+                    "area": {
+                        "type": "string"
+                    },
+                    "impression": {
+                        "type": "string"
+                    },
+                    "budget": {
+                        "type": "string"
+                    },
+                    "start": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "clientRateLimits": {
+                "type": "object",
+                "required": [
+                    "ip",
+                    "attempt",
+                    "createdAt"
+                ],
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "attempt": {
+                        "type": "number"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "clientRefreshTokens": {
+                "type": "object",
+                "required": [
+                    "refrehToken",
+                    "createdAt"
+                ],
+                "properties": {
+                    "refrehToken": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "clients": {
+                "type": "object",
+                "required": [
+                    "client_id",
+                    "name",
+                    "surname",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "number"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "number"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "designerQuestionary": {
+                "type": "object",
+                "required": [
+                    "designer_id",
+                    "questionary_id",
+                    "workDistrict",
+                    "jobCategory",
+                    "area",
+                    "impression",
+                    "budget",
+                    "start",
+                    "contact",
+                    "createdAt"
+                ],
+                "properties": {
+                    "designer_id": {
+                        "type": "string"
+                    },
+                    "questionary_id": {
+                        "type": "string"
+                    },
+                    "workDistrict": {
+                        "type": "object",
+                        "properties": {
+                            "0-20": {
+                                "type": "boolean"
+                            },
+                            "20-50": {
+                                "type": "boolean"
+                            },
+                            "50-100": {
+                                "type": "boolean"
+                            },
+                            "150-250": {
+                                "type": "boolean"
+                            },
+                            "250+": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "jobCategory": {
+                        "type": "object",
+                        "properties": {
+                            "kitchen": {
+                                "type": "boolean"
+                            },
+                            "livingroom": {
+                                "type": "boolean"
+                            },
+                            "bedroom": {
+                                "type": "boolean"
+                            },
+                            "bathroom": {
+                                "type": "boolean"
+                            },
+                            "terrace": {
+                                "type": "boolean"
+                            },
+                            "other": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "area": {
+                        "type": "object",
+                        "properties": {
+                            "0-20": {
+                                "type": "boolean"
+                            },
+                            "20-50": {
+                                "type": "boolean"
+                            },
+                            "50-100": {
+                                "type": "boolean"
+                            },
+                            "100-150": {
+                                "type": "boolean"
+                            },
+                            "150+": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "impression": {
+                        "type": "object",
+                        "properties": {
+                            "A": {
+                                "type": "boolean"
+                            },
+                            "B": {
+                                "type": "boolean"
+                            },
+                            "C": {
+                                "type": "boolean"
+                            },
+                            "D": {
+                                "type": "boolean"
+                            },
+                            "E": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "budget": {
+                        "type": "object",
+                        "properties": {
+                            "0-5000": {
+                                "type": "boolean"
+                            },
+                            "5000-10000": {
+                                "type": "boolean"
+                            },
+                            "10000-15000": {
+                                "type": "boolean"
+                            },
+                            "15000-20000": {
+                                "type": "boolean"
+                            },
+                            "20000-30000": {
+                                "type": "boolean"
+                            },
+                            "30000-40000": {
+                                "type": "boolean"
+                            },
+                            "40000+": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "start": {
+                        "type": "object",
+                        "properties": {
+                            "ASAP": {
+                                "type": "boolean"
+                            },
+                            "3M": {
+                                "type": "boolean"
+                            },
+                            "6M": {
+                                "type": "boolean"
+                            },
+                            "NOIDEA": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "contact": {
+                        "type": "object",
+                        "properties": {
+                            "platform": {
+                                "type": "boolean"
+                            },
+                            "email": {
+                                "type": "boolean"
+                            },
+                            "phone": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "designerRateLimits": {
+                "type": "object",
+                "required": [
+                    "ip",
+                    "attempt",
+                    "createdAt"
+                ],
+                "properties": {
+                    "ip": {
+                        "type": "string"
+                    },
+                    "attempt": {
+                        "type": "number"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "designerRefreshTokens": {
+                "type": "object",
+                "required": [
+                    "refrehToken",
+                    "createdAt"
+                ],
+                "properties": {
+                    "refrehToken": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "designers": {
+                "type": "object",
+                "required": [
+                    "designer_id",
+                    "name",
+                    "email",
+                    "password",
+                    "phone",
+                    "address",
+                    "about"
+                ],
+                "properties": {
+                    "designer_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "number"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "number"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "about": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
 }
